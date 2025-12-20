@@ -21,3 +21,10 @@
   align-items: center;
   justify-content: center;
 }
+
+.jogo{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 400px;
+}
