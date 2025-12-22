@@ -1,5 +1,14 @@
 import { useState } from 'react'
 import './App.css'
+import './tarefa.js'
+
+/**
+ * Marcar Tarefas com um ~ ao inves de sumir
+ * Contador de Tarefas a serem feitas
+ * Editar Tarefa
+ * Mostrar Todas/Pendentes/Concluidas
+ * Organização Automática das Tarefas
+ */
 
 function App() {
 
