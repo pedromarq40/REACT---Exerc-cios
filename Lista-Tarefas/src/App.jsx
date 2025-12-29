@@ -68,6 +68,7 @@ function App() {
   return (
     <>
       <div className='inputs'>
+
         <form onSubmit={submeter}>
           <label htmlFor="input">Insira sua tarefa: </label>
           <input 
@@ -78,7 +79,10 @@ function App() {
            />
           <button type='submit'>Submeter</button>
         </form>
+
+        <button onClick={ () => console.clear() }>Limpar Console</button>
       </div>
+      
       <div className='Lista'>
         <ol>
           {lista_de_tarefas}
