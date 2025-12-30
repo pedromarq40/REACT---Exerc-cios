@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useEffect } from 'react'
 import './App.css'
 import Tarefa from './tarefa.js'
 
@@ -8,10 +9,15 @@ import Tarefa from './tarefa.js'
 
 function App() {
 
-  const [lista, setLista] = useState(Array())
+  const [lista, setLista] = useState(JSON.parse(localStorage.getItem('lista')) || [])
   const [tarefa, setTarefa] = useState('')
   const [statusLista, setStatusLista] = useState(1)
   let Tarefas_a_serem_feitas = lista.filter( tarefa => !tarefa.concluida).length
+
+  useEffect(() => {
+    // Ação: Salvar no navegador
+    localStorage.setItem('lista', JSON.stringify(lista))
+}, [lista]) // <--- A CONDIÇÃO (Array de Dependências)
 
   function submeter(event){
 
@@ -61,11 +67,9 @@ function App() {
   function editar_tarefa(item, index){
 
     let nova_lista = lista.slice()
-    let novo_item = item 
-
     let nova_tarefa = prompt('Diga a sua nova tarefa: ')
 
-    novo_item.tarefa = nova_tarefa
+    let novo_item = { ...item, 'tarefa' : nova_tarefa}
     nova_lista[index] = novo_item
 
     setLista(nova_lista)
@@ -157,6 +161,7 @@ function App() {
     break;
   }
 
+  localStorage.setItem('lista', JSON.stringify(lista))
 
   return (
     <>
