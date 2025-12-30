@@ -3,7 +3,6 @@ import './App.css'
 import Tarefa from './tarefa.js'
 
 /**
- * Editar Tarefa
  * Mostrar Todas/Pendentes/Concluidas
  * Organização Automática das Tarefas
  */
@@ -12,6 +11,7 @@ function App() {
 
   const [lista, setLista] = useState(Array())
   const [tarefa, setTarefa] = useState('')
+  const [statusLista, setStatusLista] = useState(1)
   let Tarefas_a_serem_feitas = 0
 
   function submeter(event){
@@ -86,34 +86,107 @@ function App() {
         Tarefas_a_serem_feitas += 1
       }
     }
-
   }
 
   contar_tarefas()
 
-  const lista_de_tarefas = lista.map( (item, index) => {
+  function mostrar_todas_tarefas(){
 
-    let estilo = {
-      color: item.concluida ? 'green' : 'red'
-    }
+    const lista_de_tarefas = lista.map( (item, index) => {
 
-    return (
-      <li key={item.id}>
-        <p style={estilo}>{item.tarefa}</p>
-        <button onClick={ () => remover(index)}>Remover Tarefa</button>
-        <button onClick={ () => priorizar(item, index)}>Priorizar Tarefa</button>
-        <button onClick={ () => marcar(item, index)}>Marcar Tarefa Como Concluida</button>
-        <button onClick={ () => editar_tarefa(item, index)}>Editar Tarefa</button>
-      </li>
-    )
+      let estilo = {
+        color: item.concluida ? 'green' : 'red'
+      }
 
-  })
+      return (
+        <li key={item.id}>
+          <p style={estilo}>{item.tarefa}</p>
+          <button onClick={ () => remover(index)}>Remover Tarefa</button>
+          <button onClick={ () => priorizar(item, index)}>Priorizar Tarefa</button>
+          <button onClick={ () => marcar(item, index)}>Marcar Tarefa Como Concluida</button>
+          <button onClick={ () => editar_tarefa(item, index)}>Editar Tarefa</button>
+        </li>
+      )
+
+    })
+
+  return lista_de_tarefas
+  }
+
+  function mostrar_concluidas(){
+
+    const lista_de_tarefas = lista.map( (item, index) => {
+
+      if(item.concluida){
+
+        let estilo = {
+          color: item.concluida ? 'green' : 'red'
+        }
+
+        return (
+          <li key={item.id}>
+            <p style={estilo}>{item.tarefa}</p>
+            <button onClick={ () => remover(index)}>Remover Tarefa</button>
+            <button onClick={ () => priorizar(item, index)}>Priorizar Tarefa</button>
+            <button onClick={ () => marcar(item, index)}>Marcar Tarefa Como Concluida</button>
+            <button onClick={ () => editar_tarefa(item, index)}>Editar Tarefa</button>
+          </li>
+        )
+
+      }else{
+        return null
+      }
+    })
+
+    return lista_de_tarefas
+  }
+
+  function mostrar_pendentes(){
+
+    const lista_de_tarefas = lista.map( (item, index) => {
+
+      if(!item.concluida){
+
+        let estilo = {
+          color: item.concluida ? 'green' : 'red'
+        }
+
+        return (
+          <li key={item.id}>
+            <p style={estilo}>{item.tarefa}</p>
+            <button onClick={ () => remover(index)}>Remover Tarefa</button>
+            <button onClick={ () => priorizar(item, index)}>Priorizar Tarefa</button>
+            <button onClick={ () => marcar(item, index)}>Marcar Tarefa Como Concluida</button>
+            <button onClick={ () => editar_tarefa(item, index)}>Editar Tarefa</button>
+          </li>
+        )
+
+      }else{
+        return null
+      }
+    })
+
+    return lista_de_tarefas
+  }
+  
+  let lista_de_tarefas
+
+  switch(statusLista){
+    case 1: lista_de_tarefas = mostrar_todas_tarefas()
+    break;
+    case 2: lista_de_tarefas = mostrar_concluidas()
+    break;
+    case 3: lista_de_tarefas = mostrar_pendentes()
+    break;
+  }
+
 
   return (
     <>
       <div className='inputs'>
 
         <p>Quantidade de tarefas a serem feitas: {Tarefas_a_serem_feitas}</p>
+        <br />
 
         <form onSubmit={submeter}>
           <label htmlFor="input">Insira sua tarefa: </label>
@@ -127,6 +200,9 @@ function App() {
         </form>
 
         <button onClick={ () => console.clear() }>Limpar Console</button>
+        <button onClick={ () => setStatusLista(1)}>Mostrar Todas as Tarefas</button>
+        <button onClick={ () => setStatusLista(2)}>Mostrar Tarefas Concluidas</button>
+        <button onClick={ () => setStatusLista(3)}>Mostrar Tarefas Pendentes</button>
       </div>
       
       <div className='Lista'>
