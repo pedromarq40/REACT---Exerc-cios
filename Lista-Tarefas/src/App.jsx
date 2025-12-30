@@ -3,7 +3,6 @@ import './App.css'
 import Tarefa from './tarefa.js'
 
 /**
- * Marcar Tarefas com um ~ ao inves de sumir
  * Contador de Tarefas a serem feitas
  * Editar Tarefa
  * Mostrar Todas/Pendentes/Concluidas
@@ -14,6 +13,7 @@ function App() {
 
   const [lista, setLista] = useState(Array())
   const [tarefa, setTarefa] = useState('')
+  let Tarefas_a_serem_feitas = 0
 
   function submeter(event){
 
@@ -66,6 +66,18 @@ function App() {
 
   }
 
+  function contar_tarefas(){
+
+    for( let tarefa of lista){
+      if ( !tarefa.concluida ){
+        Tarefas_a_serem_feitas += 1
+      }
+    }
+
+  }
+
+  contar_tarefas()
+
   const lista_de_tarefas = lista.map( (item, index) => {
 
     let estilo = {
@@ -86,6 +98,8 @@ function App() {
   return (
     <>
       <div className='inputs'>
+
+        <p>Quantidade de tarefas a serem feitas: {Tarefas_a_serem_feitas}</p>
 
         <form onSubmit={submeter}>
           <label htmlFor="input">Insira sua tarefa: </label>
